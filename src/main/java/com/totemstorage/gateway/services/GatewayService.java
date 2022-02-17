@@ -19,8 +19,6 @@ public class GatewayService {
 
     public String blobStorage(String totemPacketFileName, String totemPacketData) {
 
-
-
         try {
             String accountName = CredentialService.getAccountName();
             String accountKey = CredentialService.getAccountKey();
