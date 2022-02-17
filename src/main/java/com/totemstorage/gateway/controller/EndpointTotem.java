@@ -36,7 +36,7 @@ public class EndpointTotem {
     }
 
     @CrossOrigin
-    @PostMapping 
+    @PostMapping
     public ResponseEntity<TotemPacket> toPacketStoragee(@Valid @RequestBody TotemPacket totemPacket)
     {   
         String response = gatewayStorageService.blobStorage(totemPacket.getFileName(), totemPacket.getData());

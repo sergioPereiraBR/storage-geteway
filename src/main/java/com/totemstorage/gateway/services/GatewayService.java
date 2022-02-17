@@ -15,9 +15,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GatewayService {
-    private static final String GATEWAY_FAILURE = "Gateway Storage: connection failed.";
+    private static final String GATEWAY_FAILURE = "Totem Storage Gateway: connection failed.";
 
     public String blobStorage(String totemPacketFileName, String totemPacketData) {
+
+
+
         try {
             String accountName = CredentialService.getAccountName();
             String accountKey = CredentialService.getAccountKey();
@@ -28,9 +31,9 @@ public class GatewayService {
             BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sspdev/Dev");
             BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketFileName).getBlockBlobClient();
 
-            InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8));
+            InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8)); 
             blobClient.upload(dataStream, totemPacketData.length());
-            dataStream.close();;
+            dataStream.close();
         } catch (Exception e) {
             throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
         }
