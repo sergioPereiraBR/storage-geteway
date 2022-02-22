@@ -10,6 +10,7 @@ import com.totemstorage.gateway.dto.TotemPacketDTO;
 import com.totemstorage.gateway.services.GatewayService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class EndpointTotem {
     @Autowired
     private GatewayService gatewayStorageService;
 
+    @Configuration
     @CrossOrigin
     @GetMapping
     public String getGatewayTotem() {
