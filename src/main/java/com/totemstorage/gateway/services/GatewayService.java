@@ -26,7 +26,7 @@ public class GatewayService {
             String endpoint = String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName);
 
             BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
-            BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem");
+            BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem/relatos");
             BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketFileName).getBlockBlobClient();
 
             InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8)); 

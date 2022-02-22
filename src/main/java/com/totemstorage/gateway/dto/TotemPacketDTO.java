@@ -1,8 +1,8 @@
-package com.totemstorage.gateway.entities;
+package com.totemstorage.gateway.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class TotemPacket {
+public class TotemPacketDTO {
 
     @NotNull(message = "The first argument cannot be null.")
     private String fileName;

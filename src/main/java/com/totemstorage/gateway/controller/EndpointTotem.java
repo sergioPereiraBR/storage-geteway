@@ -6,7 +6,7 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
-import com.totemstorage.gateway.entities.TotemPacket;
+import com.totemstorage.gateway.dto.TotemPacketDTO;
 import com.totemstorage.gateway.services.GatewayService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/totem")
 public class EndpointTotem {
@@ -27,7 +28,7 @@ public class EndpointTotem {
     @Autowired
     private GatewayService gatewayStorageService;
 
-    @CrossOrigin
+    
     @GetMapping
     public String getGatewayTotem() {
         Date date = new Date();
@@ -35,11 +36,10 @@ public class EndpointTotem {
         return "Return from Totem Endpoint at " + dateForm.format(date);
     }
 
-    @CrossOrigin
     @PostMapping
-    public ResponseEntity<TotemPacket> toPacketStoragee(@Valid @RequestBody TotemPacket totemPacket)
+    public ResponseEntity<TotemPacketDTO> toPacketStoragee(@Valid @RequestBody TotemPacketDTO totemPacketDTO)
     {   
-        String response = gatewayStorageService.blobStorage(totemPacket.getFileName(), totemPacket.getData());
+        String response = gatewayStorageService.blobStorage(totemPacketDTO.getFileName(), totemPacketDTO.getData());
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{totem}").buildAndExpand(response).toUri();
         return ResponseEntity.created(uri).build();
     }
