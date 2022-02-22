@@ -39,7 +39,7 @@ public class GatewayService {
         } catch (Exception e) {
             if(!blobExists)
                 throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
-            else throw new ExceptionGateway("Erro ao tentar adicionar, o blob já existe.");
+            else throw new ExceptionGateway("Erro: o blob já existe.");
         }
 
         return totemPacketFileName;
