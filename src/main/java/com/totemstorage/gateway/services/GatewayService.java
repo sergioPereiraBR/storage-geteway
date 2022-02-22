@@ -27,11 +27,14 @@ public class GatewayService {
 
             BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
             BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem/relatos");
-            BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketFileName).getBlockBlobClient();
+            if(!blobContainerClient.getBlobClient(totemPacketFileName).exists()){
+                BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketFileName).getBlockBlobClient();
 
-            InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8)); 
-            blobClient.upload(dataStream, totemPacketData.length());
-            dataStream.close();
+                InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8)); 
+                blobClient.upload(dataStream, totemPacketData.length());
+                dataStream.close();
+            } else throw new ExceptionGateway("Erro ao tentar adicionar, o blob já existe.");
+        
         } catch (Exception e) {
             throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
         }
