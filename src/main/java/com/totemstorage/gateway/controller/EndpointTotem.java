@@ -40,7 +40,7 @@ public class EndpointTotem {
     @PostMapping
     public ResponseEntity<TotemPacketDTO> toPacketStoragee(@Valid @RequestBody TotemPacketDTO totemPacketDTO)
     {   
-        String response = gatewayStorageService.blobStorage(totemPacketDTO.getFileName(), totemPacketDTO.getData());
+        TotemPacketDTO response = gatewayStorageService.blobStorage(totemPacketDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{totem}").buildAndExpand(response).toUri();
         return ResponseEntity.created(uri).build();
     }

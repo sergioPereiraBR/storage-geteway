@@ -10,6 +10,7 @@ import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import com.azure.storage.common.StorageSharedKeyCredential;
+import com.totemstorage.gateway.dto.TotemPacketDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class GatewayService {
     private static final String GATEWAY_FAILURE = "Totem Storage Gateway: connection failed.";
     private boolean blobExists = false;
 
-    public String blobStorage(String totemPacketFileName, String totemPacketData) {
+    public TotemPacketDTO blobStorage(TotemPacketDTO totemPacketDTO) {
 
         try {
             String accountName = CredentialService.getAccountName();
@@ -28,20 +29,25 @@ public class GatewayService {
 
             BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
             BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem/relatos");
-            blobExists = blobContainerClient.getBlobClient(totemPacketFileName).exists();
-            BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketFileName).getBlockBlobClient();
+            blobExists = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).exists();
 
-            InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8)); 
-            blobClient.upload(dataStream, totemPacketData.length());
-            dataStream.close();
+            if(!blobExists){
+                BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
+
+                InputStream dataStream = new ByteArrayInputStream(totemPacketDTO.getData().getBytes(StandardCharsets.UTF_8)); 
+                blobClient.upload(dataStream, totemPacketDTO.getData().length());
+                dataStream.close();
+            } else {
+                totemPacketDTO.setFileName("Não permitido");
+                totemPacketDTO.setData("Não permitido");
+
+            }
          
         
         } catch (Exception e) {
-            if(!blobExists)
-                throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
-            else throw new ExceptionGateway("Erro: o blob já existe.");
+            throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
         }
 
-        return totemPacketFileName;
+        return totemPacketDTO;
     }
 }
