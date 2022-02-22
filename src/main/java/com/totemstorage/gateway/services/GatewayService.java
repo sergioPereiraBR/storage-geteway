@@ -28,7 +28,7 @@ public class GatewayService {
 
             BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
             BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem/relatos");
-            blobExists = blobContainerClient.getBlobClient(totemPacketFileName).exists()
+            blobExists = blobContainerClient.getBlobClient(totemPacketFileName).exists();
             BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketFileName).getBlockBlobClient();
 
             InputStream dataStream = new ByteArrayInputStream(totemPacketData.getBytes(StandardCharsets.UTF_8)); 
