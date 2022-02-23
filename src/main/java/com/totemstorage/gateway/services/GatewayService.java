@@ -33,8 +33,8 @@ public class GatewayService {
 
             if(!blobExists){
                 BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
-                InputStream dataStream = new ByteArrayInputStream(totemPacketDTO.getData().getBytes(StandardCharsets.UTF_8)); 
-                blobClient.upload(dataStream, totemPacketDTO.getData().length());
+                InputStream dataStream = new ByteArrayInputStream(totemPacketDTO.getData().toString().getBytes(StandardCharsets.UTF_8)); 
+                blobClient.upload(dataStream, totemPacketDTO.getData().toString().length());
                 dataStream.close();
             } else {
                 totemPacketDTO.setFileName("Não permitido");

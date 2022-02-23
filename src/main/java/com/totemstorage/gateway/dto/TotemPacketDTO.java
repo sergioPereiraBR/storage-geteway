@@ -8,14 +8,14 @@ public class TotemPacketDTO {
     private String fileName;
 
     @NotNull(message = "The second argument cannot be null.")
-    private String data;
+    private Object data;
 
     
     public String getFileName() {
         return fileName;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
@@ -23,7 +23,7 @@ public class TotemPacketDTO {
         this.fileName = fileName;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
