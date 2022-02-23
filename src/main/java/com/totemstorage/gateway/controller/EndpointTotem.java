@@ -37,7 +37,7 @@ public class EndpointTotem {
     }
 
     @CrossOrigin
-    @PostMapping(value="/", consumes = ("application/json"))
+    @PostMapping(value="/totem", consumes = ("application/json"))
     public ResponseEntity<TotemPacketDTO> toPacketStoragee(@Valid @RequestBody TotemPacketDTO totemPacketDTO)
     {   
         TotemPacketDTO response = gatewayStorageService.blobStorage(totemPacketDTO);
