@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Configuration
 @RestController
-@RequestMapping("/totem")
+@RequestMapping
 public class EndpointTotem {
 
     @Autowired
@@ -37,7 +37,7 @@ public class EndpointTotem {
     }
 
     @CrossOrigin
-    @PostMapping
+    @PostMapping(value="/", consumes = ("application/json"))
     public ResponseEntity<TotemPacketDTO> toPacketStoragee(@Valid @RequestBody TotemPacketDTO totemPacketDTO)
     {   
         TotemPacketDTO response = gatewayStorageService.blobStorage(totemPacketDTO);

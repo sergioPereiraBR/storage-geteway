@@ -33,7 +33,6 @@ public class GatewayService {
 
             if(!blobExists){
                 BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
-
                 InputStream dataStream = new ByteArrayInputStream(totemPacketDTO.getData().getBytes(StandardCharsets.UTF_8)); 
                 blobClient.upload(dataStream, totemPacketDTO.getData().length());
                 dataStream.close();
