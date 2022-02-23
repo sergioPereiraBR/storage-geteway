@@ -31,20 +31,18 @@ public class GatewayService {
             BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem/relatos");
             blobExists = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).exists();
 
-            if(!blobExists){
                 BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
                 InputStream dataStream = new ByteArrayInputStream(totemPacketDTO.getData().toString().getBytes(StandardCharsets.UTF_8)); 
                 blobClient.upload(dataStream, totemPacketDTO.getData().toString().length());
                 dataStream.close();
-            } else {
-                totemPacketDTO.setFileName("Não permitido");
-                totemPacketDTO.setData("Não permitido");
 
-            }
-         
+       
         
         } catch (Exception e) {
-            throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
+            if(blobExists)
+            throw new ExceptionGateway("Já existe. " + e.getMessage());
+            else throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
+
         }
 
         return totemPacketDTO;
