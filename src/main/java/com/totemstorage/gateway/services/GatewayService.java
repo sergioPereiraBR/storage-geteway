@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GatewayService {
-    private static final String GATEWAY_FAILURE = "Totem Storage Gateway: connection failed.";
+    private static final String GATEWAY_FAILURE = "Totem Storage Gateway: connection failed. ";
     private boolean blobExists = false;
+    private InputStream dataStream;
+    byte[] dataTotem;
 
     public TotemPacketDTO blobStorage(TotemPacketDTO totemPacketDTO) {
 
@@ -26,23 +28,21 @@ public class GatewayService {
             String accountKey = CredentialService.getAccountKey();
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
             String endpoint = String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName);
-
             BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
+            
             BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("sandbox/safety_analytics/totem/relatos");
             blobExists = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).exists();
+            BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
 
-                BlockBlobClient blobClient = blobContainerClient.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
-                InputStream dataStream = new ByteArrayInputStream(totemPacketDTO.getData().toString().getBytes(StandardCharsets.UTF_8)); 
-                blobClient.upload(dataStream, totemPacketDTO.getData().toString().length());
-                dataStream.close();
-
-       
+            dataTotem = totemPacketDTO.getData().toString().getBytes(StandardCharsets.UTF_8);
+            dataStream = new ByteArrayInputStream(dataTotem); 
+            blobClient.upload(dataStream, dataTotem.length);
+            dataStream.close();
         
         } catch (Exception e) {
             if(blobExists)
             throw new ExceptionGateway("Já existe. " + e.getMessage());
             else throw new ExceptionGateway(GATEWAY_FAILURE + e.getMessage());
-
         }
 
         return totemPacketDTO;
