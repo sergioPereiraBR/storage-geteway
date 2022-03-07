@@ -33,7 +33,7 @@ function resultado_blobs(dataB){
     for(i=0; i< Object.keys(dataB).length; i++){
         blobName = dataB[i].fileName
         const objBlob = JSON.parse(blobName);
-        totemData = dataB[0].data;
+        totemData = dataB[i].data;
         dataFormated = formatData (totemData);
 
         listR = listR + '<div class="accordion-item">\n';

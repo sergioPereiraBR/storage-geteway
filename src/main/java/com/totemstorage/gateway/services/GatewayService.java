@@ -38,7 +38,7 @@ public class GatewayService {
             return container;
         } catch (Exception e) {
             throw new ExceptionGateway(GATEWAY_FAILURE +"<<container()>>. "+ e.getMessage());
-        }  
+        }
     }
 
     public TotemPacketDTO blobStorage(TotemPacketDTO totemPacketDTO) {
