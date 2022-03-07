@@ -39,7 +39,7 @@ function resultado_blobs(dataB){
         listR = listR + '<div class="accordion-item">\n';
         listR = listR + '  <p class="accordion-header" id="heading'+objBlob+'" style="padding: 15px; overflow-wrap: break-word; word-wrap: break-word; background: rgb(231,241,255); color:#0d6efd">\n';
         //listR = listR + '    <button class="accordion-button" type="button" aria-expanded="true" aria-controls="collapse'+objBlob+'">\n';
-        listR = listR + '      '+objBlob+'\n';
+        listR = listR + '      <b>'+objBlob+'</b>\n';
         //listR = listR + '    </button>\n';
         listR = listR + '  </p>\n';
         listR = listR + '  <div id="collapse'+objBlob+'" class="accordion-collapse" aria-labelledby="heading'+objBlob+'" data-bs-parent="#accordionExample">\n';
