@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@Configuration
 @RestController
 @RequestMapping("/totem")
+@Configuration
+@RequiredArgusConstructor
 public class EndpointTotem {
 
     @Autowired
@@ -43,5 +44,6 @@ public class EndpointTotem {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{totem}").buildAndExpand(response).toUri();
         return ResponseEntity.created(uri).build();
     }
+
 }
 

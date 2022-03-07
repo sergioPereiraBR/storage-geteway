@@ -1,0 +1,53 @@
+header {
+    position: fixed;
+    height: 50px;
+    top: 0;
+    width: 100%;
+    background: #b8d200;
+    z-index: 10000;
+}
+
+nav {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.container-fluid {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.menu-link {
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 80px;
+}
+
+.menu-link:hover {
+    color: #000;
+}
+
+.icon-bar {
+    background: #fff;
+}
+
+.item > img {
+    width: 100%;
+}
+
+.area-conteudo {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+footer {
+    position: fixed;
+    height: 30px;
+    bottom: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 10000;
+    padding-right: 15px;
+}
+
+
