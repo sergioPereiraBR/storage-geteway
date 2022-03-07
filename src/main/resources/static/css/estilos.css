@@ -50,4 +50,16 @@ footer {
     padding-right: 15px;
 }
 
+.txt {
+    padding: 10px 30px;
+    margin-top: 5px;
+    margin-right: 5px;
+    border-radius: 3px;
+    background: rgb(231,241,255);
+    outline: none;
+    cursor: pointer;
+    border: 0px;
+
+}
+
 

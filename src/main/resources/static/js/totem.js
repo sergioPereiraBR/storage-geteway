@@ -1,4 +1,4 @@
-const urlBase = "https://gateway-storage.herokuapp.com";
+const urlBase = "http://192.168.1.4:8080";//"https://gateway-storage.herokuapp.com";
 
 function blobs(){ 
     var url = `${urlBase}/totemapi/v1/admin/all`;
@@ -24,26 +24,56 @@ function blobs(){
     xhttp.send();
 }
 
-
 function resultado_blobs(dataB){
-    var listR = '';
+    var listR = "";
+    var blobName = "";
+    var totemData = "";
+    var dataFormated = "";
+    
+    for(i=0; i< Object.keys(dataB).length; i++){
+        blobName = dataB[i].fileName
+        const objBlob = JSON.parse(blobName);
+        totemData = dataB[0].data;
+        dataFormated = formatData (totemData);
 
-        for(i=0; i< Object.keys(dataB).length; i++){
-            listR = listR + '<div class="accordion-item">\n';
-            listR = listR + '  <h2 class="accordion-header" id="heading'+dataB[i].fileName.toString().trim()+'">\n';
-            listR = listR + '    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'+dataB[i].fileName.toString().trim()+'" aria-expanded="false" aria-controls="collapse'+dataB[i].fileName.toString().trim()+'">\n';
-            listR = listR + '      '+dataB[i].fileName.toString().trim()+'\n';
-            listR = listR + '    </button>\n';
-            listR = listR + '  </h2>\n';
-            listR = listR + '  <div id="collapse'+dataB[i].fileName.toString().trim()+'" class="accordion-collapse collapse" aria-labelledby="heading'+dataB[i].fileName.toString().trim()+'" data-bs-parent="#accordionExample">\n';
-            listR = listR + '    <div class="accordion-body">\n';
-            listR = listR + '      '+dataB[i].data.toString().trim()+'\n';
-            listR = listR + '    </div>\n';
-            listR = listR + '  </div>\n';
-            listR = listR + '</div>\n';
-        }
+        listR = listR + '<div class="accordion-item">\n';
+        listR = listR + '  <p class="accordion-header" id="heading'+objBlob+'" style="padding: 15px; overflow-wrap: break-word; word-wrap: break-word; background: rgb(231,241,255); color:#0d6efd">\n';
+        //listR = listR + '    <button class="accordion-button" type="button" aria-expanded="true" aria-controls="collapse'+objBlob+'">\n';
+        listR = listR + '      '+objBlob+'\n';
+        //listR = listR + '    </button>\n';
+        listR = listR + '  </p>\n';
+        listR = listR + '  <div id="collapse'+objBlob+'" class="accordion-collapse" aria-labelledby="heading'+objBlob+'" data-bs-parent="#accordionExample">\n';
+        listR = listR + '    <div class="accordion-body" style="overflow-wrap: break-word; word-wrap: break-word;">\n';
+        listR = listR + '      '+dataFormated+'\n';
+        listR = listR + '    </div>\n';
+        listR = listR + '  </div>\n';
+        listR = listR + '</div>\n';
+    }
 
     document.getElementById("accordionExample").innerHTML = listR;
     document.getElementById('spinner').classList.add('visually-hidden');
 }
 
+
+function formatData (totemData) {
+    const obj = JSON.parse(totemData);
+
+    return "uploaded: <b>"+obj.uploaded+" </b>"+
+    "<br>comportamento: <b>"+obj.comportamento+" </b>"+
+    "<br>condicao: <b>"+obj.condicao+" </b>"+
+    "<br>upload_manual: <b>"+obj.upload_manual+" </b>"+
+    "<br>usina: <b>"+obj.usina+" </b>"+
+    "<br>area: <b>"+obj.area+" </b>"+
+    "<br>celula: <b>"+obj.celula+" </b>"+
+    "<br>codigo: <b>"+obj.codigo+" </b>"+
+    "<br>data_informada: <b>"+obj.data_informada+" </b>"+
+    "<br>eh_sif: <b>"+obj.eh_sif+" </b>"+
+    "<br>nivel: <b>"+obj.nivel+" </b>"+
+    "<br>evento: <b>"+obj.evento.trim()+" </b>"+
+    "<br>resolvido: <b>"+obj.resolvido+"</b>"+
+    "<br>nome_relator: <b>"+obj.nome_relator.trim()+"</b>"+
+    "<br>tema_evento: <b>"+obj.tema_evento+" </b>"+
+    "<br>id: <b>"+obj.id+" </b>"+
+    "<br>data_hora_incluso_relato: <b>"+obj.data_hora_incluso_relato+" </b>"+
+    "<br>data_hora_upload: <b>"+obj.data_hora_upload+" </b><br><br>";
+}
