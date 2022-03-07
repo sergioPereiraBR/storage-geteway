@@ -1,4 +1,4 @@
-const urlBase = "http://192.168.1.4:8080";//"https://gateway-storage.herokuapp.com";
+const urlBase = "https://gateway-storage.herokuapp.com";
 
 function blobs(){ 
     var url = `${urlBase}/totemapi/v1/admin/all`;
