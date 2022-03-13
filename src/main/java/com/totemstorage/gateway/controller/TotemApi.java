@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.totemstorage.gateway.dto.TotemPacketDTO;
+import com.totemstorage.gateway.dto.TotemPackgeDTO;
 import com.totemstorage.gateway.services.GatewayService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +25,15 @@ public class TotemApi {
     @CrossOrigin
     @GetMapping("/all")
     public String getAllBlobs() {
-        List<TotemPacketDTO> list = new ArrayList<TotemPacketDTO>();
-        list = gatewayStorageService.downloadAllBlobsFromBlobStorage();
+        List<TotemPackgeDTO> listPackage = new ArrayList<TotemPackgeDTO>();
+        listPackage = gatewayStorageService.downloadAllBlobsFromBlobStorage();
         Gson gson = new Gson();
-        return  gson.toJson(list);
+        return  gson.toJson(listPackage);
     }
 
     @CrossOrigin
     @GetMapping(value = "/id/{id}")
-    public TotemPacketDTO getBlob(@PathVariable String id){
+    public TotemPackgeDTO getBlob(@PathVariable String id){
         return gatewayStorageService.downloadBlobFromBlobStorage(id);
     }
 }

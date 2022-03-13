@@ -6,7 +6,7 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
-import com.totemstorage.gateway.dto.TotemPacketDTO;
+import com.totemstorage.gateway.dto.TotemPackgeDTO;
 import com.totemstorage.gateway.services.GatewayService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +36,9 @@ public class EndpointTotem {
 
     @CrossOrigin
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<TotemPacketDTO> toPacketStoragee(@Valid @RequestBody TotemPacketDTO totemPacketDTO)
+    public ResponseEntity<TotemPackgeDTO> toPacketStoragee(@Valid @RequestBody TotemPackgeDTO totemPacketDTO)
     {   
-        TotemPacketDTO response = gatewayStorageService.blobToBlobStorage(totemPacketDTO);
+        TotemPackgeDTO response = gatewayStorageService.blobToBlobStorage(totemPacketDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{totem}").buildAndExpand(response).toUri();
         return ResponseEntity.created(uri).build();
     }

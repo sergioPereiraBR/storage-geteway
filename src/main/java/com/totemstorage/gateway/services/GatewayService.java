@@ -14,7 +14,7 @@ import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import com.azure.storage.common.StorageSharedKeyCredential;
-import com.totemstorage.gateway.dto.TotemPacketDTO;
+import com.totemstorage.gateway.dto.TotemPackgeDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -41,14 +41,14 @@ public class GatewayService {
         }
     }
 
-    public TotemPacketDTO blobToBlobStorage(TotemPacketDTO totemPacketDTO) {
+    public TotemPackgeDTO blobToBlobStorage(TotemPackgeDTO totemPackgeDTO) {
         try {
             BlobContainerClient container = container();
             
-            blobExists = container.getBlobClient(totemPacketDTO.getFileName()).exists();
-            BlockBlobClient blobClient = container.getBlobClient(totemPacketDTO.getFileName()).getBlockBlobClient();
+            blobExists = container.getBlobClient(totemPackgeDTO.getBlobName()).exists();
+            BlockBlobClient blobClient = container.getBlobClient(totemPackgeDTO.getBlobName()).getBlockBlobClient();
 
-            dataTotem = totemPacketDTO.getData().toString().getBytes(StandardCharsets.UTF_8);
+            dataTotem = totemPackgeDTO.getBlobPackage().toString().getBytes(StandardCharsets.UTF_8);
             dataStream = new ByteArrayInputStream(dataTotem); 
             blobClient.upload(dataStream, dataTotem.length);
             dataStream.close();
@@ -59,7 +59,7 @@ public class GatewayService {
             else throw new ExceptionGateway("<<blobStorage(TotemPacketDTO totemPacketDTO)>>. " + e.getMessage());
         }
 
-        return totemPacketDTO;
+        return totemPackgeDTO;
     }
 
     public List<String> blobsFromBlobStorage() {
@@ -96,21 +96,21 @@ public class GatewayService {
         return os;
     }
 
-    public TotemPacketDTO downloadBlobFromBlobStorage(String id) {
-        TotemPacketDTO blob = new TotemPacketDTO ();
+    public TotemPackgeDTO downloadBlobFromBlobStorage(String id) {
+        TotemPackgeDTO blob = new TotemPackgeDTO ();
 
         try {
-            blob.setData(blobFromBlobStorage(id).toString());
-            blob.setFileName(id);
+            blob.setBlobPackage(blobFromBlobStorage(id).toString());
+            blob.setBlobName(id);
         } catch (Exception e) {
-            throw new ExceptionGateway("<<downloadBlobStorage(String id)>>. "+blob.getFileName() +" - "+blob.getData()   +" - "+ e.getMessage());
+            throw new ExceptionGateway("<<downloadBlobStorage(String id)>>. "+blob.getBlobName() +" - "+blob.getBlobPackage()   +" - "+ e.getMessage());
         }
 
         return blob;
     }
 
-    public List<TotemPacketDTO> downloadAllBlobsFromBlobStorage() {
-        List<TotemPacketDTO> list = new ArrayList<TotemPacketDTO>();
+    public List<TotemPackgeDTO> downloadAllBlobsFromBlobStorage() {
+        List<TotemPackgeDTO> list = new ArrayList<TotemPackgeDTO>();
 
         try {
             List<String> blobsList = blobsFromBlobStorage();
@@ -121,7 +121,7 @@ public class GatewayService {
         } catch (Exception e) {
             throw new ExceptionGateway("<<listBlobs()>>. " + e.getMessage());
         }
-
+        
         return list;
     } 
 
