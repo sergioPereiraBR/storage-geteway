@@ -21,8 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/totem")
-@Configuration
-@RequiredArgusConstructor
 public class EndpointTotem {
 
     @Autowired

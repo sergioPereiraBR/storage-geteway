@@ -17,38 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/totemapi/v1/admin")
-@Configuration
-@RequiredArgusConstructor
 public class TotemApi {
 
     @Autowired
     private GatewayService gatewayStorageService;
 
-   // @Autowired
-    //private Gson gson;
-
     @CrossOrigin
     @GetMapping("/all")
     public String getBlobs() {
         List<TotemPacketDTO> list = new ArrayList<TotemPacketDTO>();
-
-        list = gatewayStorageService.dounloadListBlobs();
-
+        list = gatewayStorageService.downloadListBlobs();
         Gson gson = new Gson();
-       // String json = gson.toJson(list);
-
-
         return  gson.toJson(list);
     }
 
     @CrossOrigin
     @GetMapping(value = "/id/{id}")
     public TotemPacketDTO getBlob(@PathVariable String id){
-
         return gatewayStorageService.downloadBlobStorage(id);
     }
-
-
-
 }
 

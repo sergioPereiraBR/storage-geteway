@@ -109,7 +109,7 @@ public class GatewayService {
         return blob;
     }
 
-    public List<TotemPacketDTO> dounloadListBlobs() {
+    public List<TotemPacketDTO> downloadListBlobs() {
         //public List<TotemPacketDTO> dounloadListBlobs(List<String> id){
         List<TotemPacketDTO> list = new ArrayList<TotemPacketDTO>();
 
