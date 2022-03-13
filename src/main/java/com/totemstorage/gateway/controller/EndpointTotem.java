@@ -38,7 +38,7 @@ public class EndpointTotem {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<TotemPacketDTO> toPacketStoragee(@Valid @RequestBody TotemPacketDTO totemPacketDTO)
     {   
-        TotemPacketDTO response = gatewayStorageService.blobStorage(totemPacketDTO);
+        TotemPacketDTO response = gatewayStorageService.blobToBlobStorage(totemPacketDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{totem}").buildAndExpand(response).toUri();
         return ResponseEntity.created(uri).build();
     }

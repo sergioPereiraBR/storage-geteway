@@ -41,7 +41,7 @@ public class GatewayService {
         }
     }
 
-    public TotemPacketDTO blobStorage(TotemPacketDTO totemPacketDTO) {
+    public TotemPacketDTO blobToBlobStorage(TotemPacketDTO totemPacketDTO) {
         try {
             BlobContainerClient container = container();
             
@@ -55,14 +55,14 @@ public class GatewayService {
         
         } catch (Exception e) {
             if(blobExists)
-            throw new ExceptionGateway("<<Não é permitido sobrescrever o blob existente>>. " + e.getMessage());
+            throw new ExceptionGateway("<<Não é permitido sobrescrever o blob>>. " + e.getMessage());
             else throw new ExceptionGateway("<<blobStorage(TotemPacketDTO totemPacketDTO)>>. " + e.getMessage());
         }
 
         return totemPacketDTO;
     }
 
-    public List<String> listBlobs() {
+    public List<String> blobsFromBlobStorage() {
         List<String> list = new ArrayList<String>();
 
         try {
@@ -80,7 +80,7 @@ public class GatewayService {
         return list;
     }
 
-    public ByteArrayOutputStream blob(String id) {
+    public ByteArrayOutputStream blobFromBlobStorage(String id) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         try {
@@ -96,11 +96,11 @@ public class GatewayService {
         return os;
     }
 
-    public TotemPacketDTO downloadBlobStorage(String id) {
+    public TotemPacketDTO downloadBlobFromBlobStorage(String id) {
         TotemPacketDTO blob = new TotemPacketDTO ();
 
         try {
-            blob.setData(blob(id).toString());
+            blob.setData(blobFromBlobStorage(id).toString());
             blob.setFileName(id);
         } catch (Exception e) {
             throw new ExceptionGateway("<<downloadBlobStorage(String id)>>. "+blob.getFileName() +" - "+blob.getData()   +" - "+ e.getMessage());
@@ -109,21 +109,21 @@ public class GatewayService {
         return blob;
     }
 
-    public List<TotemPacketDTO> downloadListBlobs() {
-        //public List<TotemPacketDTO> dounloadListBlobs(List<String> id){
+    public List<TotemPacketDTO> downloadAllBlobsFromBlobStorage() {
         List<TotemPacketDTO> list = new ArrayList<TotemPacketDTO>();
 
         try {
-            List<String> blobsList = listBlobs();
+            List<String> blobsList = blobsFromBlobStorage();
 
             blobsList.forEach(blobName -> 
-                list.add(downloadBlobStorage(blobName))
+                list.add(downloadBlobFromBlobStorage(blobName))
             );
         } catch (Exception e) {
             throw new ExceptionGateway("<<listBlobs()>>. " + e.getMessage());
         }
 
         return list;
-    }
-    
+    } 
+
+    // TODO: Ajustar com Gestor se implementa downloadRangeBlobsFromBlobStorage [data inicial - data final]
 }

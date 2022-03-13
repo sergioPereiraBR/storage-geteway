@@ -24,9 +24,9 @@ public class TotemApi {
 
     @CrossOrigin
     @GetMapping("/all")
-    public String getBlobs() {
+    public String getAllBlobs() {
         List<TotemPacketDTO> list = new ArrayList<TotemPacketDTO>();
-        list = gatewayStorageService.downloadListBlobs();
+        list = gatewayStorageService.downloadAllBlobsFromBlobStorage();
         Gson gson = new Gson();
         return  gson.toJson(list);
     }
@@ -34,7 +34,7 @@ public class TotemApi {
     @CrossOrigin
     @GetMapping(value = "/id/{id}")
     public TotemPacketDTO getBlob(@PathVariable String id){
-        return gatewayStorageService.downloadBlobStorage(id);
+        return gatewayStorageService.downloadBlobFromBlobStorage(id);
     }
 }
 
