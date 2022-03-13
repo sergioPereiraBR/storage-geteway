@@ -1,9 +1,9 @@
 const urlBase = "https://gateway-storage.herokuapp.com";
 
-function getAllBlobs(){ 
-    var url = `${urlBase}/totemapi/v1/admin/all`;
+function getAllBlobs(){
     var xhttp = new XMLHttpRequest()
-
+    var url = `${urlBase}/totemapi/v1/admin/all`;
+    
     document.getElementById('spinner').classList.remove('visually-hidden')
 
     xhttp.onreadystatechange = function() {
@@ -44,7 +44,6 @@ function resultado_blobs(dataBlob){
     document.getElementById("accordionExample").innerHTML = htmlTags;
     document.getElementById('spinner').classList.add('visually-hidden');
 }
-
 
 function formatPackage (blobPackage) {
     const package = JSON.parse(blobPackage);
