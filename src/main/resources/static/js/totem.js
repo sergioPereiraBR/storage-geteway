@@ -8,34 +8,37 @@ function getAllBlobs(){
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let data = this.responseText;        
-            resultado_blobs(JSON.parse(data));
-        };
+            let packagesJSON = this.responseText;        
+            viewPackages(JSON.parse(packagesJSON));
+        }
     }
 
     xhttp.open("GET", url, true);
     xhttp.send();
 }
 
-function resultado_blobs(dataBlob){
+function viewPackages(packagesJSON) {
     var htmlTags = "";
-    var blobNameOfPackage = "";
-    var blobPackage = "";
-    var blobPackageFormated = "";
-    
-    for(i=0; i< Object.keys(dataBlob).length; i++){
-        blobNameOfPackage = dataBlob[i].blobName
-        const blobName = JSON.parse(blobNameOfPackage);
-        blobPackage = dataBlob[i].data;
-        blobPackageFormated = formatPackage (blobPackage);
+    var packageNameJSON = "";
+    var packageJSON = "";
+    var packageFormated = "";
+    var packageName = "";
+
+    console.log(packagesJSON);
+
+    for(i=0; i< Object.keys(packagesJSON).length; i++){
+        packageNameJSON = packagesJSON[i].fileName;
+        packageJSON = packagesJSON[i].data;
+        packageName = JSON.parse(packageNameJSON);
+        packageFormated = formatHtmlPackage (packageJSON);
 
         htmlTags = htmlTags + '<div class="accordion-item">\n';
-        htmlTags = htmlTags + '  <p class="accordion-header" id="heading'+blobName+'" style="padding: 15px; overflow-wrap: break-word; word-wrap: break-word; background: rgb(231,241,255); color:#0d6efd">\n';
-        htmlTags = htmlTags + '      <b>'+blobName+'</b>\n';
+        htmlTags = htmlTags + '  <p class="accordion-header"id="heading'+packageName+'" style="padding: 15px; overflow-wrap: break-word; word-wrap: break-word; background: rgb(231,241,255); color:#0d6efd">\n';
+        htmlTags = htmlTags + '      <b>'+packageName+'</b>\n';
         htmlTags = htmlTags + '  </p>\n';
-        htmlTags = htmlTags + '  <div id="collapse'+blobName+'" class="accordion-collapse" aria-labelledby="heading'+blobName+'" data-bs-parent="#accordionExample">\n';
+        htmlTags = htmlTags + '  <div id="collapse'+packageName+'" class="accordion-collapse" aria-labelledby="heading'+packageName+'" data-bs-parent="#accordionExample">\n';
         htmlTags = htmlTags + '    <div class="accordion-body" style="overflow-wrap: break-word; word-wrap: break-word;">\n';
-        htmlTags = htmlTags + '      '+blobPackageFormated+'\n';
+        htmlTags = htmlTags + '      '+packageFormated+'\n';
         htmlTags = htmlTags + '    </div>\n';
         htmlTags = htmlTags + '  </div>\n';
         htmlTags = htmlTags + '</div>\n';
@@ -45,25 +48,25 @@ function resultado_blobs(dataBlob){
     document.getElementById('spinner').classList.add('visually-hidden');
 }
 
-function formatPackage (blobPackage) {
-    const package = JSON.parse(blobPackage);
+function formatHtmlPackage (packageJSON) {
+    const package = JSON.parse(packageJSON);
 
     return "uploaded: <b>"+package.uploaded+" </b>"+
-    "<br>comportamento: <b>"+package.comportamento+" </b>"+ //true/false
-    "<br>condicao: <b>"+package.condicao+" </b>"+ //true/false
-    "<br>upload_manual: <b>"+obpackagej.upload_manual+" </b>"+
-    "<br>usina: <b>"+package.usina+" </b>"+ //unidade
+    "<br>comportamento: <b>"+package.comportamento+" </b>"+
+    "<br>condicao: <b>"+package.condicao+" </b>"+
+    "<br>upload_manual: <b>"+package.upload_manual+" </b>"+
+    "<br>usina: <b>"+package.usina+" </b>"+
     "<br>area: <b>"+package.area+" </b>"+
-    "<br>celula: <b>"+package.celula+" </b>"+ //setor
+    "<br>celula: <b>"+package.celula+" </b>"+
     "<br>codigo: <b>"+package.codigo+" </b>"+
     "<br>data_informada: <b>"+package.data_informada+" </b>"+
-    "<br>eh_sif: <b>"+package.eh_sif+" </b>"+ //true/false
-    "<br>nivel: <b>"+package.nivel+" </b>"+ //true/false
+    "<br>eh_sif: <b>"+package.eh_sif+" </b>"+
+    "<br>nivel: <b>"+package.nivel+" </b>"+
     "<br>evento: <b>"+package.evento.trim()+" </b>"+
-    "<br>resolvido: <b>"+package.resolvido+"</b>"+ // confirmar resposta [sim, pendente, não , ou, true/false]
+    "<br>resolvido: <b>"+package.resolvido+"</b>"+
     "<br>nome_relator: <b>"+package.nome_relator.trim()+"</b>"+
     "<br>tema_evento: <b>"+package.tema_evento+" </b>"+
-    "<br>id: <b>"+opackagebj.id+" </b>"+
+    "<br>id: <b>"+package.id+" </b>"+
     "<br>data_hora_incluso_relato: <b>"+package.data_hora_incluso_relato+" </b>"+
     "<br>data_hora_upload: <b>"+package.data_hora_upload+" </b><br><br>";
 }

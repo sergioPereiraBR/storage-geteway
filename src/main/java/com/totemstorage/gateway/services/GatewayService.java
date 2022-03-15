@@ -22,9 +22,9 @@ import org.springframework.stereotype.Service;
 public class GatewayService {
     private static final String GATEWAY_FAILURE = "Totem Storage Gateway: connection failed. ";
     private boolean blobExists = false;
-    private InputStream dataStream;
+    private InputStream packageStream;
 
-    byte[] dataTotem;
+    byte[] packageTotem;
 
     private BlobContainerClient container() {
         try {
@@ -45,13 +45,13 @@ public class GatewayService {
         try {
             BlobContainerClient container = container();
             
-            blobExists = container.getBlobClient(totemPackgeDTO.getBlobName()).exists();
-            BlockBlobClient blobClient = container.getBlobClient(totemPackgeDTO.getBlobName()).getBlockBlobClient();
+            blobExists = container.getBlobClient(totemPackgeDTO.getFileName()).exists();
+            BlockBlobClient blobClient = container.getBlobClient(totemPackgeDTO.getFileName()).getBlockBlobClient();
 
-            dataTotem = totemPackgeDTO.getBlobPackage().toString().getBytes(StandardCharsets.UTF_8);
-            dataStream = new ByteArrayInputStream(dataTotem); 
-            blobClient.upload(dataStream, dataTotem.length);
-            dataStream.close();
+            packageTotem = totemPackgeDTO.getData().toString().getBytes(StandardCharsets.UTF_8);
+            packageStream = new ByteArrayInputStream(packageTotem); 
+            blobClient.upload(packageStream, packageTotem.length);
+            packageStream.close();
         
         } catch (Exception e) {
             if(blobExists)
@@ -100,10 +100,10 @@ public class GatewayService {
         TotemPackgeDTO blob = new TotemPackgeDTO ();
 
         try {
-            blob.setBlobPackage(blobFromBlobStorage(id).toString());
-            blob.setBlobName(id);
+            blob.setFileName(id);
+            blob.setData(blobFromBlobStorage(id).toString());
         } catch (Exception e) {
-            throw new ExceptionGateway("<<downloadBlobStorage(String id)>>. "+blob.getBlobName() +" - "+blob.getBlobPackage()   +" - "+ e.getMessage());
+            throw new ExceptionGateway("<<downloadBlobStorage(String id)>>. "+blob.getFileName() +" - "+blob.getData()   +" - "+ e.getMessage());
         }
 
         return blob;
@@ -121,7 +121,7 @@ public class GatewayService {
         } catch (Exception e) {
             throw new ExceptionGateway("<<listBlobs()>>. " + e.getMessage());
         }
-        
+
         return list;
     } 
 

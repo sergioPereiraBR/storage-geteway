@@ -5,26 +5,26 @@ import javax.validation.constraints.NotNull;
 public class TotemPackgeDTO {
 
     @NotNull(message = "The first argument cannot be null.")
-    private String blobName;
+    private String fileName;
 
     @NotNull(message = "The second argument cannot be null.")
-    private Object blobPackage;
+    private Object data;
 
     
-    public String getBlobName() {
-        return blobName;
+    public String getFileName() {
+        return fileName;
     }
 
-    public Object getBlobPackage() {
-        return blobPackage;
+    public Object getData() {
+        return data;
     }
 
-    public void setBlobName(String blobName) {
-        this.blobName = blobName;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public void setBlobPackage(Object blobPackage) {
-        this.blobPackage = blobPackage;
+    public void setData(Object data) {
+        this.data = data;
     }
 
 }
