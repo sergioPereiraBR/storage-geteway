@@ -41,6 +41,40 @@ public class GatewayService {
         }
     }
 
+    private List<String> blobsFromBlobStorage() {
+        List<String> list = new ArrayList<String>();
+
+        try {
+            BlobContainerClient container = container();
+
+            container.listBlobs()
+                .forEach(blobItem -> list.add(
+                    blobItem.getName()
+                ));
+
+        } catch (Exception e) {
+            throw new ExceptionGateway("<<listBlobs()>>. " + e.getMessage());
+        }
+
+        return list;
+    }
+
+    private ByteArrayOutputStream blobFromBlobStorage(String id) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            BlobContainerClient container = container();
+
+            BlobClient blobClient = container.getBlobClient(id);
+
+            blobClient.download(os);
+        } catch (Exception e) {
+                throw new ExceptionGateway("<<blob(String id)>>. " + e.getMessage());
+        }
+
+        return os;
+    }
+
     public TotemPackgeDTO blobToBlobStorage(TotemPackgeDTO totemPackgeDTO) {
         try {
             BlobContainerClient container = container();
@@ -60,40 +94,6 @@ public class GatewayService {
         }
 
         return totemPackgeDTO;
-    }
-
-    public List<String> blobsFromBlobStorage() {
-        List<String> list = new ArrayList<String>();
-
-        try {
-            BlobContainerClient container = container();
-
-            container.listBlobs()
-                .forEach(blobItem -> list.add(
-                    blobItem.getName()
-                ));
-
-        } catch (Exception e) {
-            throw new ExceptionGateway("<<listBlobs()>>. " + e.getMessage());
-        }
-
-        return list;
-    }
-
-    public ByteArrayOutputStream blobFromBlobStorage(String id) {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-        try {
-            BlobContainerClient container = container();
-
-            BlobClient blobClient = container.getBlobClient(id);
-
-            blobClient.download(os);
-        } catch (Exception e) {
-                throw new ExceptionGateway("<<blob(String id)>>. " + e.getMessage());
-        }
-
-        return os;
     }
 
     public TotemPackgeDTO downloadBlobFromBlobStorage(String id) {
@@ -125,5 +125,5 @@ public class GatewayService {
         return list;
     } 
 
-    // TODO: Ajustar com Gestor se implementa downloadRangeBlobsFromBlobStorage [data inicial - data final]
+    // Ajustar com Gestor se implementa downloadRangeBlobsFromBlobStorage [data inicial - data final]
 }

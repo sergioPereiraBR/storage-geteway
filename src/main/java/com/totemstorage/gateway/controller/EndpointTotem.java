@@ -31,7 +31,7 @@ public class EndpointTotem {
     public String getGatewayTotem() {
         Date date = new Date();
         SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss");       
-        return "Return from Totem Endpoint at " + dateForm.format(date);
+        return "Return from /totem endpoint at " + dateForm.format(date);
     }
 
     @CrossOrigin
