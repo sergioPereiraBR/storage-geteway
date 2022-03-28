@@ -1,4 +1,5 @@
-const urlBase = "https://gateway-storage.herokuapp.com";
+//const urlBase = "https://gateway-storage.herokuapp.com";
+const urlBase = "https://totem-teste.azurewebsites.net";
 
 function getAllBlobs(){
     var xhttp = new XMLHttpRequest()
@@ -13,7 +14,17 @@ function getAllBlobs(){
         }
     }
 
+    xhttp.onerror = function () {
+        console.log("An error occurred during the access.");
+        document.getElementById('spinner').classList.add('visually-hidden');
+    };
+
     xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
+    xhttp.timeout = 4000;
+    xhttp.ontimeout = function () { 
+        document.getElementById('spinner').classList.add('visually-hidden');
+    }
     xhttp.send();
 }
 
