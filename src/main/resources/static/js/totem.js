@@ -1,15 +1,15 @@
-//const urlBase = "https://gateway-storage.herokuapp.com";
-const urlBase = "https://totem-teste.azurewebsites.net";
+const urlBase = "https://127.0.0.1";
 
 function getAllBlobs(){
     var xhttp = new XMLHttpRequest()
     var url = `${urlBase}/totemapi/v1/admin/all`;
     
     document.getElementById('spinner').classList.remove('visually-hidden')
+    document.getElementById('error').classList.add('visually-hidden')
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let packagesJSON = this.responseText;        
+            let packagesJSON = this.responseText;      
             viewPackages(JSON.parse(packagesJSON));
         }
     }
@@ -17,6 +17,7 @@ function getAllBlobs(){
     xhttp.onerror = function () {
         console.log("An error occurred during the access.");
         document.getElementById('spinner').classList.add('visually-hidden');
+        document.getElementById('error').classList.remove('visually-hidden');
     };
 
     xhttp.open("GET", url, true);

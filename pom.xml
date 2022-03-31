@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.totemstorage</groupId>
-	<artifactId>ROOT</artifactId>
+	<artifactId>totem</artifactId>
 	<version>0.0.3</version>
 	<name>gateway</name>
 	<description>Totem storage gateway</description>
@@ -127,10 +127,6 @@
 		<dependency>
 			<groupId>io.projectreactor.netty</groupId>
 			<artifactId>reactor-netty</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
